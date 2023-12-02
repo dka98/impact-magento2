@@ -1,0 +1,15 @@
+<?php
+$product = $block->getProduct();
+$impactHelper = $this->helper('Impact\Theme\Helper\ImpactHelper');
+?>
+
+<?php if ($impactHelper->isShippingFree($product)): ?>
+    <span class="awesome-campaign product-tag">
+                    <a href="/<?= $impactHelper->getStoreCode(); ?>/link-campanha">
+                        <?php
+                        echo "Nome da campanha";
+
+                        ?>
+                </span>
+<?php endif; ?>
+

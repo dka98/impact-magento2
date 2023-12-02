@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <remove src="Magefan_Blog::css/blog-m.css"/>
+        <remove src="Magefan_Blog::css/blog-new.css"/>
+        <remove src="StripeIntegration_Payments::css/stripe_payments.css"/>
+        <remove src="mage/calendar.css"/>
+    </head>
+    <body>
+        <referenceBlock name="breadcrumbs" remove="true"/>
+
+        <move element="page.main.title" destination="product.info.main" before="-"/>
+        <move element="product.info.price" destination="product.info.main" after="page.main.title"/>
+        <move element="product.info.social" destination="product.info.addtocart" after="-"/>
+        <move element="product.category.description" destination="product.info.main" before="product.info.price"/>
+
+        <referenceBlock name="product.info.sku" remove="true"/>
+        <referenceBlock name="product.info.stock.sku" remove="true"/>
+        <referenceBlock name="product.attributes" remove="true"/>
+        <referenceBlock name="product.info.description" remove="true"/>
+
+        <move element="shipping.times" destination="product.info.main" before="product.info"/>
+
+        <move element="product.info.media" destination="content" before="product.info.main"/>
+
+
+        <referenceBlock name="product.info.overview">
+            <arguments>
+                <argument name="at_call" xsi:type="string">getShortDescription</argument>
+                <argument name="at_code" xsi:type="string">description</argument>
+            </arguments>
+        </referenceBlock>
+
+        <container name="product.discount.tag.container" htmlTag="div" htmlClass="product-discount-tag-container">
+            <block class="Magento\Catalog\Block\Product\View" name="product.info.name.discount" template="product/view/discount-tag.phtml"/>
+        </container>
+        <move element="product.discount.tag.container" destination="product.info.main" after="page.main.title"/>
+
+
+        <container name="media.details.wrapper" htmlTag="div" htmlClass="media-details-wrapper"/>
+        <move element="product.info.media" destination="media.details.wrapper" before="-"/>
+        <move element="product.info.main" destination="media.details.wrapper" after="product.info.media"/>
+        <move element="media.details.wrapper" destination="content" before="-"/>
+
+        <referenceBlock name="product.info.details">
+            <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.description2"
+                   as="description2" template="Magento_Catalog::product/view/attribute.phtml" group="detailed_info">
+                <arguments>
+                    <argument name="priority" xsi:type="string">1</argument>
+                    <argument name="at_call" xsi:type="string">getDescription</argument>
+                    <argument name="at_code" xsi:type="string">description</argument>
+                    <argument name="css_class" xsi:type="string">description</argument>
+                    <argument name="at_label" xsi:type="string">none</argument>
+                    <argument name="title" translate="true" xsi:type="string">Características</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Catalog\Block\Product\View" name="product.instructions" as="instructions"
+                   template="how_to_use.phtml" group="detailed_info">
+                <arguments>
+                    <argument translate="true" name="title" xsi:type="string">How to use</argument>
+                    <argument name="priority" xsi:type="string">2</argument>
+                </arguments>
+            </block>
+            <referenceBlock name="reviews.tab">
+                <arguments>
+                    <argument name="priority" xsi:type="string">3</argument>
+                </arguments>
+            </referenceBlock>
+            <referenceBlock name="product.info.description">
+                <arguments>
+                    <argument name="priority" xsi:type="string">4</argument>
+                </arguments>
+            </referenceBlock>
+            <referenceBlock name="product.attributes">
+                <arguments>
+                    <argument name="priority" xsi:type="string">5</argument>
+                </arguments>
+            </referenceBlock>
+        </referenceBlock>
+
+
+        <move element="product.info.details" destination="media.details.wrapper" after="-"/>
+
+    </body>
+</page>

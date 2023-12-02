@@ -1,0 +1,13 @@
+<div class="product-discount-tag-container">
+    <div class="product-tag-wrapper">
+        <?php if (isset($impactHelper) && method_exists($impactHelper, 'isShippingFree')): ?>
+            <?php $shippingFree = isset($_item) ? $impactHelper->isShippingFree($_item) : (isset($_product) ? $impactHelper->isShippingFree($_product) : false); ?>
+            <?php if ($shippingFree): ?>
+                <span class="awesome-campaign product-tag">
+                    <a href="/<?= $impactHelper->getStoreCode(); ?>/link-da-campanha">
+                        Nome Da Campanha
+                </span>
+            <?php endif; ?>
+        <?php endif; ?>
+    </div>
+</div>

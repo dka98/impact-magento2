@@ -1,0 +1,39 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var $block Magento\Catalog\Block\Product\View */
+?>
+
+<?php
+$product = $block->getProduct();
+$impactHelper =  $this->helper('Impact\Theme\Helper\ImpactHelper');
+
+$required = '';
+if ($block->hasRequiredOptions()) {
+    $required = ' data-hasrequired="' . $block->escapeHtmlAttr(__('* Required Fields')) . '"';
+}
+?>
+
+
+<?php if (isset($optionCount)) :?>
+<script>
+    <?php $attribute = array_values($optionCount)[0]['attribute_id'];?>
+    let attribute = <?php echo "$attribute"; ?>;
+
+    document.getElementById("attribute" + attribute).onchange = function() {
+        let optionSelected = this.value;
+        if (optionSelected){
+            let urlParam = attribute + "=" + optionSelected;
+            if (history.pushState) {
+                var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '#' + urlParam.toString();
+                window.history.pushState({path: newUrl}, '', newUrl);
+            }
+        }
+
+    }
+
+</script>
+<?php endif; ?>
